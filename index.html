@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inteligentní dům</title>
+
+    <script src="js/angular.min.js"></script>
+</head>
+<body>
+<div ng-app="app" ng-controller="SensorDataCtrl">
+    <ul>
+        <li ng-repeat="sensor in data">
+            {{sensor.date | date}} - {{sensor.val}}
+        </li>
+    </ul>
+</div>
+
+
+<script>
+    var app = angular.module("app", []);
+    app.constant("restUrlPrefix", "pages/");
+
+    app.controller("SensorDataCtrl", function ($scope, SensorDataService) {
+        SensorDataService.getSensorData().then(function (response) {
+            $scope.data = response.data;
+        })
+    });
+
+    app.service("SensorDataService", function (restUrlPrefix, $http) {
+        return {
+            getSensorData: function () {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'values.php'
+                })
+            }
+        };
+    });
+</script>
+</body>
+</html>
