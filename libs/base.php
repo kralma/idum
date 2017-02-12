@@ -6,7 +6,8 @@
 */
 function initDatabase()
 {
-$dbname = "mysql:dbname=idumwzcz7478;host=185.64.219.6";
+//$dbname = "mysql:dbname=idumwzcz7478;host=185.64.219.6";
+$dbname = "mysql:dbname=idumwzcz7478;host=localhost";
 $user = "idumwzcz7478";
 $pass = "db5555";
 try {
