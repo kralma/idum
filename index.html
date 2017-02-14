@@ -16,7 +16,7 @@
 
 <script>
     var app = angular.module("app", []);
-    app.constant("restUrlPrefix", "pages/");
+    app.constant("restUrlPrefix", "api/");
 
     app.controller("SensorDataCtrl", function ($scope, SensorDataService) {
         SensorDataService.getSensorData().then(function (response) {
@@ -82,7 +82,7 @@
                     var dateRange = dateEnd - dateInitial;
                     var valueRange = valueMax - valueMin;
                     var stepX = width / dateRange;
-                    var stepY = height / valueRange;
+                    var stepY = height * 0.9 / valueRange;
                     var points = "";
 
                     for (key in scope.data) {
