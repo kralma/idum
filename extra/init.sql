@@ -22,16 +22,35 @@ CREATE TABLE sensor (
 CREATE TABLE sensor_value (
   sensor_value_id BIGINT PRIMARY KEY AUTO_INCREMENT,
   sensor_id BIGINT,
-  value FLOAT(10,4) NOT NULL,
+  value FLOAT(8,4) NOT NULL,
   FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
 );
 
-CREATE TABLE user_sensor (
-  user_sensor_id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+CREATE TABLE project (
+  project_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name TEXT NOT NULL,
+  DESCRIPTION TEXT
+);
+
+CREATE TABLE project_sensor (
+  project_sensor_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  project_id BIGINT,
   sensor_id BIGINT,
+  FOREIGN KEY (project_id) REFERENCES project(project_id),
+  FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
+);
+
+CREATE TABLE user_project (
+  user_project_id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+  project_id BIGINT,
   username VARCHAR(20),
-  FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id),
+  FOREIGN KEY (project_id) REFERENCES project(project_id),
   FOREIGN KEY (username) REFERENCES user(username)
+);
+
+CREATE TABLE admin (
+  admin_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(20)
 );
 
 INSERT INTO sensor_type (sensor_type_name) VALUES ('TEMP_C'),('CONSUMPTION_W'),('ON_OFF');

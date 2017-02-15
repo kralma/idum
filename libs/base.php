@@ -4,6 +4,9 @@
  * @param none
  * @return PDO database
  */
+
+session_start();
+
 function initDatabase()
 {
 //$dbname = "mysql:dbname=idumwzcz7478;host=185.64.219.6";
@@ -32,6 +35,27 @@ function do_query($db, $query, $data)
     $statement = $db->prepare($query);
     $statement->execute($data);
     return $statement;
+}
+
+function setLoggedUser($user)
+{
+    $_SESSION['user'] = $user;
+}
+
+function getLoggedUser()
+{
+    if (array_key_exists('user', $_SESSION)) {
+        return $_SESSION['user'];
+    } else {
+        return null;
+    }
+}
+
+function getSafely($key, $array)
+{
+    if (array_key_exists($key, $array)) {
+        return $array[$key];
+    } else return null;
 }
 
 
