@@ -9,7 +9,7 @@ CREATE TABLE user (
 
 CREATE TABLE sensor_type (
   sensor_type_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  sensor_type_name VARCHAR(25)
+  sensor_type_name VARCHAR(20)
 );
 
 CREATE TABLE sensor (
@@ -40,12 +40,19 @@ CREATE TABLE project_sensor (
   FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
 );
 
+CREATE TABLE user_project_role (
+  user_project_role_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_project_role_name VARCHAR 20
+)
+
 CREATE TABLE user_project (
   user_project_id BIGINT AUTO_INCREMENT PRIMARY KEY ,
   project_id BIGINT,
   username VARCHAR(20),
+  user_project_role_id BIGINT,
   FOREIGN KEY (project_id) REFERENCES project(project_id),
   FOREIGN KEY (username) REFERENCES user(username)
+  FOREIGN KEY (user_project_role_id) REFERENCES user_project_role(user_project_role_id)
 );
 
 CREATE TABLE admin (
@@ -54,3 +61,4 @@ CREATE TABLE admin (
 );
 
 INSERT INTO sensor_type (sensor_type_name) VALUES ('TEMP_C'),('CONSUMPTION_W'),('ON_OFF');
+INSERT INTO user_project_role (user_project_role_name) VALUES ('OWNER'),('SENSOR'),('VISITOR');
