@@ -1,0 +1,146 @@
+.dropdown-menu {
+  position: absolute;
+  background: @color-secondary;
+  border: 1px solid @color-grey-darker;
+  padding: 0;
+  margin-top: 2px;
+  display: none;
+  overflow: auto;
+  max-height: 200px;
+  min-width: 200px;
+  box-shadow: 0 0 10px @color-neutral;
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  display: block;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid @color-secondary-dark;
+}
+
+.dropdown-menu li.active {
+  background: @color-primary;
+}
+
+.dropdown-menu li.active a {
+  color: @color-secondary;
+  text-decoration: none;
+}
+
+.dropdown-menu * {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.dropdown-menu .suggestion {
+  display: table-row;
+}
+
+.dropdown-menu .suggestion > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.dropdown-menu .suggestion .image {
+  background-color: white;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 1.4em;
+  height: 1.4em;
+  border: 5px solid white;
+  margin-right: 5px;
+}
+
+input + .dropdown-menu.note,
+input + * + .dropdown-menu.note {
+  padding: 10px;
+  color: @color-neutral;
+  text-align: center;
+  display: none;
+}
+
+input:focus + .dropdown-menu.note.shown,
+input:focus + * + .dropdown-menu.note.shown,
+.dropdown-menu.note.shown:hover {
+  display: block;
+}
+
+.popover, .popover * {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.popover.notification-detail {
+  border: 1px solid @color-primary;
+  padding: 0;
+  box-shadow: 0 0 20px @color-neutral-dark;
+  font-size: @font-size-base;
+  max-width: 100%;
+  width: 500px;
+}
+
+.popover.left-top {
+  margin-left: -10px;
+  margin-top: 0;
+}
+
+.popover.notification-detail.left-top .arrow {
+  border-left-color: @color-primary;
+  top: 10px !important;
+  right: -22px !important;
+}
+
+.popover.notification-detail.left-top .arrow:after {
+  border-left-color: @color-secondary;
+  left: -12px;
+  top: -10px;
+}
+
+.popover.right-top {
+  margin-left: 10px;
+  margin-top: 0;
+}
+
+.popover.notification-detail.right-top .arrow {
+  border-right-color: @color-primary;
+  top: 10px !important;
+  left: -22px !important;
+}
+
+.popover.notification-detail.right-top .arrow:after {
+  border-right-color: @color-secondary;
+  right: -12px;
+  top: -10px;
+}
+
+.popover.notification-detail .popover-title {
+  background: none;
+  border-bottom: 1px solid @color-grey-darker;
+  color: @color-primary;
+  font-size: @font-size-base;
+}
+
+@media (max-width: 630px) {
+  .popover.notification-detail {
+    width: 99%;
+    left: 2px !important;
+  }
+}
+
+@media (max-width: 901px) {
+  .popover.notification-detail {
+    left: 2px !important;
+  }
+
+  .popover.notification-detail .arrow {
+    left: 10% !important;
+  }
+}

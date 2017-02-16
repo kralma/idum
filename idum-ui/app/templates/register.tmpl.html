@@ -1,0 +1,10 @@
+<form class="register" ng-controller="UserCtrl" ng-submit="register()">
+    <input type="text" required ng-model="user.name"/>
+    <input type="text" required ng-model="user.username"/>
+    <input type="email" required ng-model="user.email"/>
+    <input type="password" required ng-model="user.password"/>
+    <input type="password" required ng-model="passwordAgain"/>
+    <button type="submit">
+        Sign in
+    </button>
+</form>

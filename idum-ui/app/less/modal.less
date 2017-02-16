@@ -1,0 +1,194 @@
+.modal, .modal * {
+  transition: all @transition-time;
+}
+
+.modal > .wrapper {
+  visibility: hidden;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  max-height: 90%;
+  //overflow: auto;
+  position: fixed;
+  z-index: 200;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+
+.modal.notification > .wrapper {
+  -webkit-transform: translate(-50%, 0%);
+  -moz-transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+  -o-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+  top: 10px;
+  width: initial;
+  max-width: 800px;
+}
+
+.modal.shown > .wrapper {
+  visibility: visible;
+}
+
+.modal .overlay {
+  position: fixed;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 199;
+  top: 0;
+  left: 0;
+  background: transparent;
+  visibility: hidden;
+  background: @color-neutral;
+  opacity: 0;
+}
+
+.modal.shown .overlay {
+  opacity: 0.7;
+  visibility: visible;
+  -webkit-animation: show-overlay @transition-time;
+  animation: show-overlay @transition-time;
+}
+
+.modal .dialog {
+  background: @color-secondary;
+  border: 1px solid @color-primary;
+  padding: 20px;
+  -webkit-transform: scale(0.2) rotateX(90deg);
+  -moz-transform: scale(0.2) rotateX(90deg);
+  -ms-transform: scale(0.2) rotateX(90deg);
+  -o-transform: scale(0.2) rotateX(90deg);
+  transform: scale(0.2) rotateX(90deg);
+  opacity: 0;
+}
+
+.modal.notification .dialog {
+  padding: 10px 40px 10px 20px;
+  border: none;
+  box-shadow: 0 0 10px @color-neutral-dark;
+  color: @color-secondary;
+}
+
+.modal.shown .dialog {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+  opacity: 1;
+  -webkit-animation: open-dialog @transition-time;
+  animation: open-dialog @transition-time;
+}
+
+.modal.notification.negative .dialog {
+  background: @color-negative;
+}
+
+.modal.notification.primary .dialog {
+  background: @color-primary;
+}
+
+.modal.notification.positive .dialog {
+  background: @color-positive;
+}
+
+.modal .dialog > header {
+  border-bottom: 1px solid @color-primary;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal .dialog header h3 {
+  font-size: @font-size-section;
+  margin: 0;
+}
+
+.modal.notification .dialog .btn.square.ico.cross {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.modal .dialog .btn.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 25px;
+  padding: 15px 15px;
+  line-height: 0.5;
+}
+
+.modal .dialog > .btns {
+  border-top: 1px solid @color-neutral;
+  padding-top: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.dialog > .btns .ico:before {
+  margin-right: 4px;
+}
+
+.modal .dialog > .btns .btn {
+  margin: 0 10px;
+}
+
+@-webkit-keyframes open-dialog {
+  0% {
+    -webkit-transform: scale(0.2) rotateX(90deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes open-dialog {
+  0% {
+    -webkit-transform: scale(0.2) rotateX(90deg);
+    -moz-transform: scale(0.2) rotateX(90deg);
+    -ms-transform: scale(0.2) rotateX(90deg);
+    -o-transform: scale(0.2) rotateX(90deg);
+    transform: scale(0.2) rotateX(90deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes show-overlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes show-overlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}

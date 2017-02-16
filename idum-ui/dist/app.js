@@ -5,7 +5,16 @@
     var app = angular.module("app");
     app.constant("restUrlPrefix", "api/");
 })(angular);
+(function (angular) {
+    angular.module('app').config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+        $routeProvider.when('/asdf', {
+            controller: 'UserCtrl',
+            templateUrl: '/idum-ui/app/templates/login.tmpl.html'
+        });
 
+        $locationProvider.html5Mode(true);
+    }]);
+})(angular);
 (function (angular) {
     angular.module("app").controller("SensorDataCtrl", ["$scope", "SensorDataService", function ($scope, SensorDataService) {
         SensorDataService.getSensorData().then(function (response) {
@@ -37,7 +46,7 @@
             replace: true,
             transclude: false,
             template: "<div><svg width='200' height='200'></svg></div>",
-            scope: {data: '='},
+            scope: { data: '=' },
             link: function (scope, elem, attrs) {
                 scope.$watch('data', function () {
                     updateGraph();

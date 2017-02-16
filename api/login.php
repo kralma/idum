@@ -2,10 +2,10 @@
 require "../libs/base.php";
 header("Content-Type: application/json; charset=UTF-8");
 
-$postData = getPostData();
-if (count($postData) > 0) {
+$rawData = getPostData();
+if (count($rawData) > 0) {
     $data = array(
-        getSafely('username', $rawData),
+        getSafely('username', $rawData)
     );
     $query = 'SELECT * FROM user WHERE username=?';
     $statement = do_query($db, $query, $data);

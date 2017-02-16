@@ -1,0 +1,135 @@
+@font-face {
+  font-family: 'Technika';
+  src: url('../../fonts/Technika-Regular.eot');
+  src: url('../../fonts/Technika-Regular.eot?#iefix') format('embedded-opentype'),
+  url('../../fonts/Technika-Regular.woff2') format('woff2'),
+  url('../../fonts/Technika-Regular.woff') format('woff'),
+  url('../../fonts/Technika-Regular.ttf') format('truetype'),
+  url('../../fonts/Technika-Regular.svg') format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Technika';
+  src: url('../../fonts/Technika-Italic.eot');
+  src: url('../../fonts/Technika-Italic.eot?#iefix') format('embedded-opentype'),
+  url('../../fonts/Technika-Italic.woff2') format('woff2'),
+  url('../../fonts/Technika-Italic.woff') format('woff'),
+  url('../../fonts/Technika-Italic.ttf') format('truetype'),
+  url('../../fonts/Technika-Italic.svg') format('svg');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Technika';
+  src: url('../../fonts/Technika-Light.eot');
+  src: url('../../fonts/Technika-Light.eot?#iefix') format('embedded-opentype'),
+  url('../../fonts/Technika-Light.woff2') format('woff2'),
+  url('../../fonts/Technika-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Technika';
+  src: url('../../fonts/Technika-LightItalic.eot');
+  src: url('../../fonts/Technika-LightItalic.eot?#iefix') format('embedded-opentype'),
+  url('../../fonts/Technika-LightItalic.woff2') format('woff2'),
+  url('../../fonts/Technika-LightItalic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../../fonts/fontawesome-webfont.eot');
+  src: url('../../fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../../fonts/fontawesome-webfont.woff2') format('woff2'),
+  url('../../fonts/fontawesome-webfont.woff') format('woff'),
+  url('../../fonts/fontawesome-webfont.ttf') format('truetype'),
+  url('../../fonts/fontawesome-webfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html {
+  margin: 0;
+  font-size: @font-size-base;
+  font-family: 'Technika';
+  font-weight: 400;
+  background: @color-secondary-dark;
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Technika';
+  color: @color-primary;
+  font-weight: 600;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: @font-size-headline;
+  border-bottom: 1px solid;
+  margin-top: 0.4em;
+}
+
+h2 {
+  font-size: @font-size-section;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: @font-size-section;
+}
+
+h4 {
+  font-size: @font-size-subsection;
+}
+
+a {
+  cursor: pointer;
+  color: @color-primary;
+  text-decoration: none;
+}
+
+a:hover {
+  color: @color-primary-light;
+  text-decoration: underline;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+  color: inherit;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {
+  color: inherit;
+}
+
+p {
+  text-align: justify;
+}
+
+.all {
+  min-height: 100%;
+  position: relative;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+h2:first-letter,
+h3:first-letter,
+h4:first-letter,
+.btn:first-letter,
+.btn > *:first-letter,
+.status:first-letter,
+.subtitle:first-letter,
+label:first-letter,
+.label:first-letter {
+  text-transform: uppercase;
+}

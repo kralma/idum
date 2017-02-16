@@ -1,0 +1,68 @@
+footer.main {
+  display: table;
+  width: 96%;
+  clear: both;
+  background: @color-secondary;
+  border-top: 5px solid @color-primary-light;
+  margin: 20px 0 0;
+  padding: 20px 2%;
+  position: absolute;
+  bottom: 0;
+}
+
+footer.main > .center {
+  max-width: @max-page-width;
+  margin: 0 @menu-width;
+}
+
+footer.main .signature {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80%;
+}
+
+footer.main .logo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18%;
+  text-align: right;
+}
+
+footer.main .logo img {
+  width: 100%;
+  max-width: 150px;
+}
+
+.all > .clear {
+  clear: both;
+  padding-bottom: 9em;
+}
+
+@media (max-width: @reduced-view) {
+  footer.main > .center {
+    margin: 0 @menu-width-reduced
+  }
+}
+
+@media (max-width: @two-column-view) {
+  footer.main > .center {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: @min-desktop-view) {
+  .all > .clear {
+    padding-bottom: 0;
+  }
+
+  footer.main {
+    margin: 0;
+    position: absolute;
+    padding: 20px 5%;
+    width: 90%;
+  }
+
+  footer.main > .center {
+    margin: 0;
+  }
+}

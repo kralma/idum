@@ -57,7 +57,7 @@ gulp.task('default', function () {
 
     gulp.start(['build', 'less']);
 
-    gulp.watch('app/**/**', ['build']);
+    gulp.watch('app/**', ['build']);
     gulp.watch('app/less/**', ['less']);
 });
 
