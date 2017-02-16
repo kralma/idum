@@ -2,8 +2,7 @@
 require "../libs/base.php";
 header("Content-Type: application/json; charset=UTF-8");
 
-$postData = file_get_contents('php://input');
-$rawData = json_decode($postData, true);
+$rawData = getPostData();
 
 $username = getSafely('username', $rawData);
 $password = getSafely('password', $rawData);

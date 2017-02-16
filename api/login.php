@@ -2,9 +2,8 @@
 require "../libs/base.php";
 header("Content-Type: application/json; charset=UTF-8");
 
-$postData = file_get_contents('php://input');
-if (strlen($postData) > 0) {
-    $rawData = json_decode($postData, true);
+$postData = getPostData();
+if (count($postData) > 0) {
     $data = array(
         getSafely('username', $rawData),
     );

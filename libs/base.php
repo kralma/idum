@@ -58,6 +58,13 @@ function getSafely($key, $array)
     } else return null;
 }
 
+function getPostData()
+{
+    $postData = file_get_contents('php://input');
+    $data = json_decode($postData, true);
+    return $data;
+}
+
 
 $db = initDatabase();
 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, TRUE);
