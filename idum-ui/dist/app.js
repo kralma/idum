@@ -1,7 +1,37 @@
 (function (angular) {
-    var app = angular.module("app", []);
+    angular.module("app", ['ngRoute', 'textAngular', 'pascalprecht.translate', 'ngCookies', 'ui.bootstrap', 'ngFileUpload']);
+})(angular);
+(function (angular) {
+    var app = angular.module("app");
+    app.constant("restUrlPrefix", "api/");
+})(angular);
 
-    app.directive("graph", function ($window) {
+(function (angular) {
+    angular.module("app").controller("SensorDataCtrl", ["$scope", "SensorDataService", function ($scope, SensorDataService) {
+        SensorDataService.getSensorData().then(function (response) {
+            $scope.data = response.data;
+        });
+    }]);
+})(angular);
+(function (angular) {
+    angular.module("app").controller("UserCtrl", ["$scope", "UserService", function ($scope, UserService) {
+        $scope.login = function () {
+            UserService.login($scope.user).then(function (response) {
+                console.log(response.data);
+            });
+        };
+
+        $scope.register = function () {
+            UserService.register($scope.user).then(function (response) {
+                console.log(response.data);
+            });
+        };
+    }]);
+})(angular);
+(function (angular) {
+    var app = angular.module("app");
+
+    app.directive("graph", ["$window", function ($window) {
         return {
             restrict: 'E',
             replace: true,
@@ -63,6 +93,47 @@
                     svgElement.innerHTML = '<polyline points="' + points + '" style="fill:none;stroke:black;stroke-width:3"/>';
                 }
             }
-        }
-    });
+        };
+    }]);
+})(angular);
+(function (angular) {
+    var app = angular.module("app");
+    app.service("SensorDataService", ["restUrlPrefix", "$http", function (restUrlPrefix, $http) {
+        return {
+            getSensorData: function () {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'values.php'
+                });
+            }
+        };
+    }]);
+})(angular);
+
+(function (angular) {
+    var app = angular.module("app");
+    app.service("UserService", ["restUrlPrefix", "$http", function (restUrlPrefix, $http) {
+        return {
+            register: function (user) {
+                return $http({
+                    method: 'POST',
+                    url: restUrlPrefix + 'register.php',
+                    data: user
+                });
+            },
+            login: function (user) {
+                return $http({
+                    method: 'POST',
+                    url: restUrlPrefix + 'login.php',
+                    data: user
+                });
+            },
+            currentUser: function (user) {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'login.php'
+                });
+            }
+        };
+    }]);
 })(angular);

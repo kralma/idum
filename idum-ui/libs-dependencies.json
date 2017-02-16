@@ -1,0 +1,21 @@
+[
+  "vendor/angular.js",
+  "vendor/angular-animate.js",
+  "vendor/angular-cookies.js",
+  "vendor/angular-route.js",
+  "vendor/angular-resource.js",
+  "vendor/angular-translate.js",
+  "vendor/angular-translate-loader-static-files.js",
+  "vendor/angular-translate-storage-cookie.js",
+  "vendor/moment.js",
+  "vendor/iefix.js",
+  "vendor/lodash.js",
+  "vendor/loading-bar.min.js",
+  "vendor/pikaday.js",
+  "vendor/textAngular-sanitize.js",
+  "vendor/textAngular.js",
+  "vendor/textAngular-rangy.min.js",
+  "vendor/textAngularSetup.js",
+  "vendor/bootstrap.js",
+  "vendor/ng-file-upload.js"
+]
