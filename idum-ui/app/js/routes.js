@@ -1,7 +1,7 @@
 (function (angular) {
     angular.module('app').config(
         function ($routeProvider, $locationProvider) {
-            $routeProvider.when('/asdf', {
+            $routeProvider.when('/login', {
                 controller: 'UserCtrl',
                 templateUrl: '/idum-ui/app/templates/login.tmpl.html'
             });
