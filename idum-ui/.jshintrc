@@ -1,0 +1,8 @@
+{
+  "laxbreak": true,
+  // ignore: Bad line breaking before '+'.
+  "-W041": false,
+  // ignore: Use === to compare with null
+  "sub": true
+  // ignore: a.["hello"] should be written a.hello warning
+}

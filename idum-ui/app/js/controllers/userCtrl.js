@@ -1,8 +1,13 @@
 (function (angular) {
-    angular.module("app").controller("UserCtrl", function ($scope, UserService) {
+    angular.module("app").controller("UserCtrl", function ($rootScope, $scope, UserService, DialogService) {
         $scope.login = function () {
             UserService.login($scope.user).then(function (response) {
-                console.log(response.data);
+                var data = response.data;
+                if (data) {
+                    DialogService.sendPositiveNotification("LOGIN_OK");
+                    $rootScope.loggedUser = data;
+                } else
+                    DialogService.sendNegativeNotification("LOGIN_FAILED");
             });
         };
 

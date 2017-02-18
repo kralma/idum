@@ -1,0 +1,28 @@
+<div class="modal {{shown ? 'shown' : ''}}">
+    <div class="overlay" ng-click="close()">
+    </div>
+    <div class="wrapper">
+        <div class="dialog">
+            <header>
+                <h3>
+                    {{dialogTexts.title}}
+                </h3>
+                <a href="" class="btn close" ng-click="close()" ng-show="!preventClose"></a>
+            </header>
+            <div class="modal-content">
+                {{dialogTexts.content}}
+                <div style="text-align: center" ng-show="spinner">
+                    <div class="spinner dark large">
+                    </div>
+                </div>
+                <div ng-transclude>
+                </div>
+            </div>
+            <div class="btns" ng-show="btns.length > 0">
+                <a class="btn {{btn.class}} large" ng-repeat="btn in btns" ng-click="btn.action()">
+                    <span>{{btn.label}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

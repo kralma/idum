@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="cs">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,75 +9,20 @@
     <base href="/">
     <script src="idum-ui/dist/libs.js"></script>
     <script src="idum-ui/dist/app.js"></script>
+    <link rel="stylesheet" href="idum-ui/dist/css/main.css">
 </head>
 
 <body ng-app="app">
-
-<div ng-view>
-</div>
 <div class="all" ng-controller="HeaderCtrl">
     <div class="menu-controller" id="main-nav-controller" ng-click="menuVisible = !menuVisible"></div>
     <div class="left panel {{menuVisible ? 'visible' : ''}}">
         <header class="main">
             <div class="container">
                 <div class="logo">
-                    <img alt="ČVUT SUP" src="img/logo.svg"/>
+                    IDUM
                 </div>
-            </div>
-            <div class="btns-controls">
-                <button type="button" class="btn ico task {{tasksVisible? 'selected' : ''}}"
-                        title="{{'TASKS' | translate }}"
-                        ng-click="toggleTasks()">
-                    <span class="counter"
-                          ng-show="(numberOfTasks) && (numberOfTasks != 0)">{{numberOfTasks}}</span>
-                </button>
-                <button type="button" class="btn ico processes {{processesVisible? 'selected' : ''}}"
-                        title="{{'PROCESSES' | translate }}"
-                        ng-click="toggleProcesses()">
-                </button>
-                <button type="button" class="btn ico notification {{notificationsVisible? 'selected' : ''}}"
-                        title="{{'NOTIFICATIONS' | translate }}" ng-click="toggleNotifications()">
-                    <span class="counter"
-                          ng-show="(numberOfNotifications) && (numberOfNotifications != 0)">{{numberOfNotifications}}</span>
-                </button>
-                <button type="button" class="btn ico settings {{settingsVisible? 'selected' : ''}}"
-                        title="{{'SETTINGS' | translate }}"
-                        ng-click="toggleSettings()">
-                </button>
             </div>
         </header>
-        <div>
-            <control-boxes left tasks-shown="tasksVisible"
-                           processes-shown="processesVisible"
-                           notifications-shown="notificationsVisible"
-                           settings-shown="settingsVisible">
-            </control-boxes>
-        </div>
-
-        <div class="search" ng-controller="SearchCtrl">
-            <form name="searchForm">
-                <div class="form-group">
-                    <input class="search-input" type="text"
-                           style="width: 100%; padding-left: 20px; font-family: Technika, FontAwesome;"
-                           ng-model="searchInput"
-                           placeholder="&#xF002;&nbsp;&nbsp;&nbsp; {{'SEARCH' | translate}}"
-                           uib-typeahead="result as result.title for result in search($viewValue)"
-                           typeahead-loading="loading" typeahead-no-results="noResults"
-                           typeahead-on-select="redirectOnResult(searchInput)"
-                           typeahead-editable="true"
-                           typeahead-wait-ms="500"
-                           typeahead-template-url="sup/template/search-suggestion.tmpl.html"/>
-                    <div class="dropdown-menu note" ng-class="{shown : noResults && searchInput}">
-                        <span translate="NO_RESULTS_FOR_QUERY" translate-value-query="{{searchInput}}"></span>
-                        <div>
-                            <a ng-href="search/{{searchInput}}" class="btn primary small" style="margin-top: 15px;">
-                                {{'ADVANCED_SEARCH' | translate}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
 
         <nav>
             <div class="wrapper">
@@ -107,11 +52,10 @@
     <div class="overlay" ng-click="menuVisible = false"></div>
 
     <div class="right panel">
-        <control-boxes right tasks-shown="true" processes-shown="true" notifications-shown="true" settings-shown="true">
-        </control-boxes>
+
     </div>
     <div class="header-title">
-        <img src="img/logo.svg" alt="ČVUT v Praze"/>
+        <!--<img src="img/logo.svg" alt="ČVUT v Praze"/>-->
     </div>
     <div class="content wrapper">
         <div ng-view class="content">
@@ -127,10 +71,10 @@
         <div class="center">
             <div class="wrapper">
                 <div class="signature">
-                    Tento web vznikl za podpory rektora ČVUT a rozvojového projektu Komercializace.
+                    AHOJ
                 </div>
                 <div class="logo">
-                    <img src="img/logo-cvut.png" alt="ČVUT v Praze"/>
+
                 </div>
 
             </div>

@@ -14,7 +14,7 @@ if (count($rawData) > 0) {
     if (password_verify(getSafely('password', $rawData), $user['pass'])) {
         setLoggedUser($user);
     } else {
-        echo "invalid username or password";
+        setLoggedUser(null);
     }
 }
 echo json_encode(getLoggedUser());

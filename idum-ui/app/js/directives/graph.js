@@ -30,7 +30,7 @@
 
                     var valueMin = scope.data[0].val;
                     var valueMax = scope.data[0].val;
-                    for (key in scope.data) {
+                    for (var key in scope.data) {
                         if (scope.data.hasOwnProperty(key)) {
                             if (scope.data[key].val < valueMin) {
                                 valueMin = scope.data[key].val;
@@ -63,6 +63,6 @@
                     svgElement.innerHTML = '<polyline points="' + points + '" style="fill:none;stroke:black;stroke-width:3"/>';
                 }
             }
-        }
+        };
     });
 })(angular);

@@ -30,7 +30,7 @@
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "http": "0.0.0",
     "http-proxy": "^1.14.0",
     "jshint": "^2.9.2",
@@ -42,8 +42,5 @@
     "streamqueue": "^1.1.1",
     "through": "^2.0.1",
     "yargs": "^4.8.1"
-  },
-  "devDependencies": {
-    "gulp-util": "^3.0.8"
   }
 }

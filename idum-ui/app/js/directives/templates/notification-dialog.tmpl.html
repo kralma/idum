@@ -1,0 +1,10 @@
+<div class="modal notification {{shown ? 'shown' : ''}}">
+    <div class="wrapper">
+        <div class="dialog">
+            <button type="button" class="btn square ico cross" ng-click="close()" ng-show="!preventClose"></button>
+            <div class="content" ng-transclude>
+
+            </div>
+        </div>
+    </div>
+</div>

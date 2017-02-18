@@ -9,7 +9,7 @@ var minify = require('gulp-clean-css');
 var localServer = require('./server.js');
 
 gulp.task('build', function () {
-    var tmpls = gulp.src('app/js/**/*.tmpl.html')
+    var tmpls = gulp.src('app/templates/*.tmpl.html')
         .pipe(plugins.angularHtmlify())
         .pipe(plugins.angularTemplatecache({
             root: "idum",
@@ -38,7 +38,7 @@ gulp.task('build', function () {
 
 gulp.task('less', function () {
     var destination = "dist/css";
-    gulp.src('less/main.less')
+    gulp.src('app/less/main.less')
         .pipe(plugins.plumber())
         .pipe(plugins.less())
         .pipe(plugins.rename({basename: "main"}))
@@ -57,7 +57,8 @@ gulp.task('default', function () {
 
     gulp.start(['build', 'less']);
 
-    gulp.watch('app/**', ['build']);
+    gulp.watch('app/js/**', ['build']);
+    gulp.watch('app/templates/**', ['build']);
     gulp.watch('app/less/**', ['less']);
 });
 

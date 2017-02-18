@@ -6,7 +6,7 @@
                 return $http({
                     method: 'GET',
                     url: restUrlPrefix + 'values.php'
-                })
+                });
             }
         };
     });
