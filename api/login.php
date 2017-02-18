@@ -8,7 +8,7 @@ if (count($rawData) > 0) {
         getSafely('username', $rawData)
     );
     $query = 'SELECT * FROM user WHERE username=?';
-    $statement = do_query($db, $query, $data);
+    $statement = doQuery($db, $query, $data);
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     if (password_verify(getSafely('password', $rawData), $user['pass'])) {

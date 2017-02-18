@@ -22,7 +22,7 @@ if (array_key_exists("data", $_POST)) {
         }
     }
     $query = $query . ";";
-    do_query($db, $query, $data);
+    doQuery($db, $query, $data);
 }
 
 $data = array();
@@ -33,7 +33,7 @@ if ($sensorId == null) {
     $query = "SELECT * FROM sensor_value WHERE sensor_id=?;";
 }
 
-$statement = do_query($db, $query, $data);
+$statement = doQuery($db, $query, $data);
 $ret = array();
 foreach ($statement as $row) {
     $arr = array('sensor_value_id' => $row['sensor_value_id'], 'sensor_id' => $row['sensor_id'], 'date' => strtotime($row['date'])*1000, 'val' => $row['val']);

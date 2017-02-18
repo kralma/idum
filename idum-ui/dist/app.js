@@ -398,15 +398,66 @@
         };
     }]);
 })(angular);
-
+(function (angular) {
+    var app = angular.module("app");
+    app.service("ProjectService", ["restUrlPrefix", "$http", function (restUrlPrefix, $http) {
+        return {
+            createProject: function (data) {
+                return $http({
+                    method: 'POST',
+                    url: restUrlPrefix + 'projects.php',
+                    data: data
+                });
+            },
+            getProject: function (projectId) {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'projects.php?projectId=' + projectId
+                });
+            },
+            getProjects: function () {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'projects.php'
+                });
+            }
+        };
+    }]);
+})(angular);
 (function (angular) {
     var app = angular.module("app");
     app.service("SensorDataService", ["restUrlPrefix", "$http", function (restUrlPrefix, $http) {
         return {
-            getSensorData: function () {
+            getSensorData: function (sensorId) {
                 return $http({
                     method: 'GET',
+                    url: restUrlPrefix + 'values.php?sensorId=' + sensorId
+                });
+            },
+            setSensorData: function (data) {
+                return $http({
+                    method: 'POST',
                     url: restUrlPrefix + 'values.php'
+                });
+            }
+        };
+    }]);
+})(angular);
+(function (angular) {
+    var app = angular.module("app");
+    app.service("SensorService", ["restUrlPrefix", "$http", function (restUrlPrefix, $http) {
+        return {
+            createSensor: function (data) {
+                return $http({
+                    method: 'POST',
+                    url: restUrlPrefix + 'sensors.php',
+                    data: data
+                });
+            },
+            getProjectSensors: function (projectId) {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'sensors.php?projectId=' + projectId
                 });
             }
         };

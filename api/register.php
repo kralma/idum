@@ -24,11 +24,11 @@ $data = array(
 
 $query = "INSERT INTO user (name,username,email,pass) VALUES (?,?,?,?);";
 
-do_query($db, $query, $data);
+doQuery($db, $query, $data);
 
 $data = array($username);
 $query = "SELECT * FROM user WHERE username=?";
-$statement = do_query($db, $query, $data);
+$statement = doQuery($db, $query, $data);
 
 $user = $statement->fetch(PDO::FETCH_ASSOC);
 echo json_encode($user);
