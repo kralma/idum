@@ -14,8 +14,9 @@ CREATE TABLE sensor_type (
 
 CREATE TABLE sensor_value (
   sensor_value_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  sensor_id BIGINT,
-  value FLOAT(8,4) NOT NULL,
+  sensor_id       BIGINT,
+  value           FLOAT(8,4) NOT NULL,
+  date_insert     TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
 );
 

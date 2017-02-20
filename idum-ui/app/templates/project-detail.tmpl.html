@@ -1,0 +1,27 @@
+<h1>
+    {{project.projectName}}
+</h1>
+<p>
+    {{project.projectDescription}}
+</p>
+<h2>
+    Senzory
+</h2>
+<ul>
+    <li ng-repeat="client in project.clients">
+        <h3>{{client.clientName}}</h3>
+        <code>{{client.clientKey}}</code>
+        <ul>
+            <li ng-repeat="sensor in client.sensors">
+                {{sensor.sensorName}} - {{sensor.lastValue.value ? sensor.lastValue.value : "Neznámá hodnota"}}
+                <a ng-click="getExtendedData(sensor)">
+                    Podrobnosti
+                </a>
+                <div ng-show="sensor.showExtended">
+                    <graph style="width: 100%;" data="sensor.allValues">
+                    </graph>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

@@ -15,6 +15,18 @@
             controller: 'UserCtrl',
             templateUrl: '/idum-ui/app/templates/register.tmpl.html'
         });
+        $routeProvider.when('/projects', {
+            controller: 'ProjectsListCtrl',
+            templateUrl: '/idum-ui/app/templates/projects.tmpl.html'
+        });
+        $routeProvider.when('/new-project', {
+            controller: 'NewProjectCtrl',
+            templateUrl: '/idum-ui/app/templates/new-project.tmpl.html'
+        });
+        $routeProvider.when('/projects/:projectId', {
+            controller: 'ProjectCtrl',
+            templateUrl: '/idum-ui/app/templates/project-detail.tmpl.html'
+        });
 
         $locationProvider.html5Mode(true);
     }]);
@@ -34,66 +46,37 @@
 (function (angular) {
     angular.module("app").controller("HeaderCtrl", ["$rootScope", "$scope", "$location", "$filter", function ($rootScope, $scope, $location, $filter) {
 
-        $scope.$on('$routeChangeStart', function (scope, next, current) {
-            $scope.menuVisible = false;
-            reloadMenuItems();
+        $scope.$on('$routeChangeStart', function (scope, next, current) {});
+    }]);
+})(angular);
+(function (angular) {
+    angular.module("app").controller("ProjectsListCtrl", ["$scope", "ProjectService", "DialogService", "$location", function ($scope, ProjectService, DialogService, $location) {
+        ProjectService.getProjects().then(function (response) {
+            $scope.projects = response.data;
+        });
+    }]);
+
+    angular.module("app").controller("NewProjectCtrl", ["$scope", "ProjectService", "DialogService", "$location", function ($scope, ProjectService, DialogService, $location) {
+        $scope.createProject = function () {
+            ProjectService.createProject($scope.project).then(function (response) {
+                DialogService.sendPositiveNotification("Projekt byl úspěšně vytvořen");
+                $location.path('projects/' + response.data.projectId);
+            });
+        };
+    }]);
+
+    angular.module("app").controller("ProjectCtrl", ["$scope", "ProjectService", "DialogService", "SensorDataService", "$routeParams", function ($scope, ProjectService, DialogService, SensorDataService, $routeParams) {
+        var projectId = $routeParams.projectId;
+        ProjectService.getProject(projectId).then(function (response) {
+            $scope.project = response.data;
         });
 
-        $scope.menuItems = [{
-            label: 'HOME',
-            icon: 'home',
-            url: 'home',
-            expandable: false,
-            shown: true
-        }, {
-            label: 'PROFILES',
-            icon: 'profiles',
-            expandable: true,
-            shown: true,
-            expanded: true,
-            items: [{ label: 'MY_PROFILES', url: 'my-profiles', shown: false }, { label: 'INSTITUTES', url: 'institutes', shown: true }, { label: 'COMPANIES', url: 'companies', shown: true }]
-        }, {
-            label: 'PROJECTS',
-            icon: 'search-assignment',
-            expandable: true,
-            shown: true,
-            expanded: true,
-            items: [{
-                label: 'CREATE_FINISHED_PROJECT',
-                url: 'create-finished-assignment',
-                shown: true,
-                hasRole: 'ADMIN, REFERENT, TEAM_SUPERVISOR'
-            }, { label: 'FINISHED_PROJECTS', url: 'assignments/finished', shown: true }, { label: 'PUBLISHED_ARTICLES', url: 'articles', shown: true }]
-        }, {
-            label: 'MANAGEMENT',
-            icon: 'settings',
-            expandable: true,
-            shown: true,
-            expanded: true,
-            items: [{ label: 'CREATE_TEAM', url: 'create-team', shown: true }, { label: 'CREATE_COMPANY', url: 'create-company', shown: true, hasRole: 'ADMIN, REFERENT' }, { label: 'CREATE_INSTITUTE', url: 'create-institute', shown: true, hasRole: 'ADMIN' }, { label: 'FAKE_LOGIN', url: 'fake-login', shown: true, hasRole: 'ADMIN' }]
-        }];
-
-        reloadMenuItems();
-
-        function reloadMenuItems() {
-            var currentPath = $location.path().slice(1);
-            $scope.menuItems.forEach(function (item) {
-                item.active = currentPath.indexOf(item.url) === 0;
-                if (item.items != null) {
-                    item.items.forEach(function (subitem) {
-                        if (currentPath.indexOf(subitem.url) === 0) {
-                            subitem.active = true;
-                            item.active = false;
-                        } else {
-                            subitem.active = false;
-                        }
-                    });
-                }
+        $scope.getExtendedData = function (sensor) {
+            sensor.showExtended = true;
+            SensorDataService.getSensorData(sensor.sensorId).then(function (response) {
+                sensor.allValues = response.data;
             });
-        }
-
-        //var menuItemElements = document.getElementsByClassName('expandable');
-        //console.log(menuItemElements[0]);
+        };
     }]);
 })(angular);
 (function (angular) {
@@ -105,7 +88,12 @@
 })(angular);
 (function (angular) {
     angular.module("app").controller("UserCtrl", ["$rootScope", "$scope", "UserService", "DialogService", function ($rootScope, $scope, UserService, DialogService) {
+        UserService.currentUser().then(function (response) {
+            $rootScope.loggedUser = response.data;
+        });
+
         $scope.login = function () {
+            console.log($scope.user);
             UserService.login($scope.user).then(function (response) {
                 var data = response.data;
                 if (data) {
@@ -152,14 +140,14 @@
                     svgElement.setAttribute('width', width);
                     svgElement.setAttribute('height', height);
 
-                    var valueMin = scope.data[0].val;
-                    var valueMax = scope.data[0].val;
+                    var valueMin = scope.data[0].value;
+                    var valueMax = scope.data[0].value;
                     for (var key in scope.data) {
                         if (scope.data.hasOwnProperty(key)) {
-                            if (scope.data[key].val < valueMin) {
-                                valueMin = scope.data[key].val;
-                            } else if (scope.data[key].val > valueMax) {
-                                valueMax = scope.data[key].val;
+                            if (scope.data[key].value < valueMin) {
+                                valueMin = scope.data[key].value;
+                            } else if (scope.data[key].value > valueMax) {
+                                valueMax = scope.data[key].value;
                             }
                         }
                     }
@@ -167,8 +155,8 @@
                     var first = scope.data[0];
                     var dataLength = scope.data.length;
                     var last = scope.data[dataLength - 1];
-                    var dateInitial = first.date;
-                    var dateEnd = last.date;
+                    var dateInitial = first.dateInsert;
+                    var dateEnd = last.dateInsert;
                     var dateRange = dateEnd - dateInitial;
                     var valueRange = valueMax - valueMin;
                     var stepX = width / dateRange;
@@ -178,8 +166,8 @@
                     for (key in scope.data) {
                         if (scope.data.hasOwnProperty(key)) {
                             var d = scope.data[key];
-                            var x = (d.date - dateInitial) * stepX;
-                            var y = height - (d.val - valueMin) * stepY;
+                            var x = (d.dateInsert - dateInitial) * stepX;
+                            var y = height - (d.value - valueMin) * stepY;
                             points = points + x + "," + y + " ";
                         }
                     }
@@ -412,7 +400,7 @@
             getProject: function (projectId) {
                 return $http({
                     method: 'GET',
-                    url: restUrlPrefix + 'projects.php?projectId=' + projectId
+                    url: restUrlPrefix + 'projects.php?project_id=' + projectId
                 });
             },
             getProjects: function () {
@@ -482,7 +470,7 @@
                     data: user
                 });
             },
-            currentUser: function (user) {
+            currentUser: function () {
                 return $http({
                     method: 'GET',
                     url: restUrlPrefix + 'login.php'
@@ -492,5 +480,8 @@
     }]);
 })(angular);
 angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("idum/login.tmpl.html","<form class=\"login\" data-ng-submit=\"login()\">\n    <input type=\"text\" required data-ng-model=\"user.username\">\n\n    <input type=\"password\" required data-ng-model=\"user.password\">\n\n    <button type=\"submit\">\n        Log in\n    </button>\n</form>\n");
-$templateCache.put("idum/register.tmpl.html","<form class=\"register\" data-ng-controller=\"UserCtrl\" data-ng-submit=\"register()\">\r\n    <input type=\"text\" required data-ng-model=\"user.name\">\r\n    <input type=\"text\" required data-ng-model=\"user.username\">\r\n    <input type=\"email\" required data-ng-model=\"user.email\">\r\n    <input type=\"password\" required data-ng-model=\"user.password\">\r\n    <input type=\"password\" required data-ng-model=\"passwordAgain\">\r\n    <button type=\"submit\">\r\n        Sign in\r\n    </button>\r\n</form>");
+$templateCache.put("idum/new-project.tmpl.html","<h1>\r\n    Nový projekt\r\n</h1>\r\n<form data-ng-submit=\"createProject()\">\r\n    <div class=\"form-group\">\r\n        <label for=\"projectName\">\r\n            Název projektu\r\n        </label>\r\n        <input type=\"text\" id=\"projectName\" data-ng-model=\"project.projectName\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"projectDescription\">\r\n            Popis projektu\r\n        </label>\r\n        <textarea id=\"projectDescription\" rows=\"5\" data-ng-model=\"project.projectDescription\">\r\n        </textarea>\r\n    </div>\r\n    <div class=\"btns-bottom\">\r\n        <button type=\"submit\" class=\"btn positive large pull-right ico tick\">\r\n            Vytvořit\r\n        </button>\r\n    </div>\r\n</form>\r\n");
+$templateCache.put("idum/project-detail.tmpl.html","<h1>\r\n    {{project.projectName}}\r\n</h1>\r\n<p>\r\n    {{project.projectDescription}}\r\n</p>\r\n<h2>\r\n    Senzory\r\n</h2>\r\n<ul>\r\n    <li data-ng-repeat=\"client in project.clients\">\r\n        <h3>{{client.clientName}}</h3>\r\n        <code>{{client.clientKey}}</code>\r\n        <ul>\r\n            <li data-ng-repeat=\"sensor in client.sensors\">\r\n                {{sensor.sensorName}} - {{sensor.lastValue.value ? sensor.lastValue.value : \"Neznámá hodnota\"}}\r\n                <a data-ng-click=\"getExtendedData(sensor)\">\r\n                    Podrobnosti\r\n                </a>\r\n                <div data-ng-show=\"sensor.showExtended\">\r\n                    <graph style=\"width: 100%;\" data=\"sensor.allValues\">\r\n                    </graph>\r\n                </div>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ul>");
+$templateCache.put("idum/projects.tmpl.html","<ul class=\"preview-list\">\r\n    <li data-ng-repeat=\"project in projects\">\r\n        <a data-ng-href=\"projects/{{project.projectId}}\">\r\n            {{project.projectName}}\r\n        </a>\r\n    </li>\r\n</ul>\r\n\r\n<a data-ng-href=\"new-project\">\r\n    Nový projekt\r\n</a>");
+$templateCache.put("idum/register.tmpl.html","<form class=\"register\" data-ng-controller=\"UserCtrl\" data-ng-submit=\"register()\">\r\n    <h1>\r\n        Registrace nového uživatele\r\n    </h1>\r\n    <div class=\"form-group\">\r\n        <label for=\"name\">\r\n            Jméno\r\n        </label>\r\n        <input name=\"name\" id=\"name\" type=\"text\" required data-ng-model=\"user.name\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"username\">\r\n            Uživatelské jméno\r\n        </label>\r\n        <input name=\"username\" id=\"username\" type=\"text\" required data-ng-model=\"user.username\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"email\">\r\n            Email\r\n        </label>\r\n        <input name=\"email\" id=\"email\" type=\"email\" required data-ng-model=\"user.email\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"password\">\r\n            Heslo\r\n        </label>\r\n        <input name=\"password\" id=\"password\" type=\"password\" required data-ng-model=\"user.password\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n        <label for=\"passwordAgain\">\r\n            Heslo znovu\r\n        </label>\r\n        <input name=\"passwordAgain\" id=\"passwordAgain\" type=\"password\" required data-ng-model=\"passwordAgain\">\r\n    </div>\r\n    <div class=\"btns-bottom\">\r\n        <button type=\"submit\" class=\"btn positive ico tick large pull-right\">\r\n            Registrovat\r\n        </button>\r\n    </div>\r\n</form>");
 $templateCache.put("idum/sensor.tmpl.html","<div data-ng-controller=\"SensorDataCtrl\">\r\n    <graph data=\"data\" style=\"width: 100%\"></graph>\r\n</div>");}]);

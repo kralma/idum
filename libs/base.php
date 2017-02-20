@@ -94,11 +94,19 @@ function getSensorsForClient($db, $clientId)
     $sensorStatement = doQuery($db, $query, $data);
     $sensors = array();
     while ($sensor = $sensorStatement->fetch(PDO::FETCH_ASSOC)) {
-        array_push($sensors, array(
-                'sensorId' => $sensor['sensor_id'],
-                'sensorName' => $sensor['sensor_name']
-            )
-        );
+        $sensorId = $sensor['sensor_id'];
+        $query = "SELECT * FROM sensor_value WHERE sensor_id=? ORDER BY date_insert DESC LIMIT 1;";
+        $data = array($sensorId);
+        $valueStatement = doQuery($db, $query, $data);
+        $lastValue = $valueStatement->fetch(PDO::FETCH_ASSOC);
+        if ($sensorId != null) {
+            array_push($sensors, array(
+                    'sensorId' => $sensorId,
+                    'sensorName' => $sensor['sensor_name'],
+                    'lastValue' => array('value' => $lastValue['value'], 'dateInsert' => $lastValue['date_insert'])
+                )
+            );
+        }
     }
     return $sensors;
 }
@@ -112,12 +120,14 @@ function getClientsForProject($db, $projectId)
     $statement = doQuery($db, $query, $data);
     $clients = array();
     while ($client = $statement->fetch(PDO::FETCH_ASSOC)) {
-        array_push($clients, array(
-                'clientId' => $client['client_id'],
-                'clientName' => $client['client_name'],
-                'sensors' => getSensorsForClient($db, $client['client_id'])
-            )
-        );
+        if ($client['client_id'] != null) {
+            array_push($clients, array(
+                    'clientId' => $client['client_id'],
+                    'clientName' => $client['client_name'],
+                    'sensors' => getSensorsForClient($db, $client['client_id'])
+                )
+            );
+        }
     }
     return $clients;
 }

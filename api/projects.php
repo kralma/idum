@@ -33,12 +33,15 @@ if ($projectId != null) {
 $statement = doQuery($db, $query, $data);
 $response = array();
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-    array_push($response, array(
-            'projectId' => $row['project_id'],
-            'projectName' => $row['name'],
-            'projectDescription' => $row['description'],
-            'sensors' => getClientsForProject($db, $row['project_id'])
-        )
+    $project = array(
+        'projectId' => $row['project_id'],
+        'projectName' => $row['name'],
+        'projectDescription' => $row['description'],
+        'clients' => getClientsForProject($db, $row['project_id'])
     );
+    if ($projectId != null) {
+        $response = $project;
+    }
+    array_push($response, $project);
 }
 echo json_encode($response);

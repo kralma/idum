@@ -1,0 +1,11 @@
+<ul class="preview-list">
+    <li ng-repeat="project in projects">
+        <a ng-href="projects/{{project.projectId}}">
+            {{project.projectName}}
+        </a>
+    </li>
+</ul>
+
+<a ng-href="new-project">
+    Nový projekt
+</a>

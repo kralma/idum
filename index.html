@@ -14,71 +14,36 @@
 
 <body ng-app="app">
 <div class="all" ng-controller="HeaderCtrl">
-    <div class="menu-controller" id="main-nav-controller" ng-click="menuVisible = !menuVisible"></div>
-    <div class="left panel {{menuVisible ? 'visible' : ''}}">
-        <header class="main">
-            <div class="container">
-                <div class="logo">
-                    IDUM
-                </div>
-            </div>
-        </header>
-
+    <header class="main">
         <nav>
-            <div class="wrapper">
-                <ul>
-                    <li ng-repeat="item in menuItems"
-                        ng-class="{expandable: item.expandable, expanded: item.expanded}"
-                        ng-show="item.shown">
-                        <a ng-href="{{item.url}}" ng-click="item.expandable && (item.expanded = !item.expanded)"
-                           ng-class="{active: item.active}">
-                            <span class="ico {{item.icon}}"></span>
-                            <span>{{item.label | translate}}</span>
-                        </a>
-                        <ul class="submenu" ng-show="item.expanded">
-                            <li has-role="{{subitem.hasRole}}" ng-repeat="subitem in item.items"
-                                ng-show="subitem.shown">
-                                <a ng-href="{{subitem.url}}" ng-class="{active: subitem.active}">
-                                    <span>{{subitem.label | translate}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
+            <a ng-href="home">
+                Shrnutí
+            </a>
+            <a ng-href="projects">
+                Moje projekty
+            </a>
         </nav>
-    </div>
-    <div class="overlay" ng-click="menuVisible = false"></div>
-
-    <div class="right panel">
-
-    </div>
-    <div class="header-title">
-        <!--<img src="img/logo.svg" alt="ČVUT v Praze"/>-->
-    </div>
-    <div class="content wrapper">
-        <div ng-view class="content">
-
+        <div ng-controller="UserCtrl" class="user-box">
+            <div class="logged-user" ng-show="loggedUser">
+                {{loggedUser.name}}
+            </div>
+            <form class="login-form" ng-hide="loggedUser" ng-submit="login()">
+                <input type="text" required ng-model="user.username"/>
+                <input type="password" required ng-model="user.password"/>
+                <button type="submit">
+                    Přihlásit
+                </button>
+            </form>
         </div>
+    </header>
 
-    </div>
-
-    <div class="clear">
-    </div>
+    <section class="content wrapper">
+        <div ng-view class="content">
+        </div>
+    </section>
 
     <footer class="main">
-        <div class="center">
-            <div class="wrapper">
-                <div class="signature">
-                    AHOJ
-                </div>
-                <div class="logo">
-
-                </div>
-
-            </div>
-        </div>
+        asdf
     </footer>
 </div>
 

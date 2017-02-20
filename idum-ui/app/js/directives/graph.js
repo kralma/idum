@@ -28,14 +28,14 @@
                     svgElement.setAttribute('width', width);
                     svgElement.setAttribute('height', height);
 
-                    var valueMin = scope.data[0].val;
-                    var valueMax = scope.data[0].val;
+                    var valueMin = scope.data[0].value;
+                    var valueMax = scope.data[0].value;
                     for (var key in scope.data) {
                         if (scope.data.hasOwnProperty(key)) {
-                            if (scope.data[key].val < valueMin) {
-                                valueMin = scope.data[key].val;
-                            } else if (scope.data[key].val > valueMax) {
-                                valueMax = scope.data[key].val;
+                            if (scope.data[key].value < valueMin) {
+                                valueMin = scope.data[key].value;
+                            } else if (scope.data[key].value > valueMax) {
+                                valueMax = scope.data[key].value;
                             }
                         }
                     }
@@ -43,8 +43,8 @@
                     var first = scope.data[0];
                     var dataLength = scope.data.length;
                     var last = scope.data[dataLength - 1];
-                    var dateInitial = first.date;
-                    var dateEnd = last.date;
+                    var dateInitial = first.dateInsert;
+                    var dateEnd = last.dateInsert;
                     var dateRange = dateEnd - dateInitial;
                     var valueRange = valueMax - valueMin;
                     var stepX = width / dateRange;
@@ -54,8 +54,8 @@
                     for (key in scope.data) {
                         if (scope.data.hasOwnProperty(key)) {
                             var d = scope.data[key];
-                            var x = (d.date - dateInitial) * stepX;
-                            var y = height - (d.val - valueMin) * stepY;
+                            var x = (d.dateInsert - dateInitial) * stepX;
+                            var y = height - (d.value - valueMin) * stepY;
                             points = points + x + "," + y + " ";
                         }
                     }

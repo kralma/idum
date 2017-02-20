@@ -9,9 +9,15 @@ if (count($rawData) > 0) {
     );
     $query = 'SELECT * FROM user WHERE username=?';
     $statement = doQuery($db, $query, $data);
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    $userTemp = $statement->fetch(PDO::FETCH_ASSOC);
+    $user = array(
+        'username' => $userTemp['username'],
+        'name' => $userTemp['name'],
+        'email' => $userTemp['email'],
+        'userId' => $userTemp['user_id']
+    );
 
-    if (password_verify(getSafely('password', $rawData), $user['pass'])) {
+    if (password_verify(getSafely('password', $rawData), $userTemp['pass'])) {
         setLoggedUser($user);
     } else {
         setLoggedUser(null);

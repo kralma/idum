@@ -17,7 +17,7 @@
                     data: user
                 });
             },
-            currentUser: function (user) {
+            currentUser: function () {
                 return $http({
                     method: 'GET',
                     url: restUrlPrefix + 'login.php'

@@ -12,7 +12,7 @@
             getProject: function (projectId) {
                 return $http({
                     method: 'GET',
-                    url: restUrlPrefix + 'projects.php?projectId=' + projectId
+                    url: restUrlPrefix + 'projects.php?project_id=' + projectId
                 });
             },
             getProjects: function () {

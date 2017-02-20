@@ -1,0 +1,23 @@
+<h1>
+    Nový projekt
+</h1>
+<form ng-submit="createProject()">
+    <div class="form-group">
+        <label for="projectName">
+            Název projektu
+        </label>
+        <input type="text" id="projectName" ng-model="project.projectName"/>
+    </div>
+    <div class="form-group">
+        <label for="projectDescription">
+            Popis projektu
+        </label>
+        <textarea id="projectDescription" ng-model="project.projectDescription" rows="5">
+        </textarea>
+    </div>
+    <div class="btns-bottom">
+        <button type="submit" class="btn positive large pull-right ico tick">
+            Vytvořit
+        </button>
+    </div>
+</form>
