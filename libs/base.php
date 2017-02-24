@@ -53,6 +53,9 @@ function getLoggedUser()
 
 function getSafely($key, $array)
 {
+    if ($array == null) {
+        return null;
+    }
     if (array_key_exists($key, $array)) {
         return $array[$key];
     }
