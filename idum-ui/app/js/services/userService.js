@@ -22,6 +22,12 @@
                     method: 'GET',
                     url: restUrlPrefix + 'login.php'
                 });
+            },
+            logout: function () {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'logout.php'
+                });
             }
         };
     });

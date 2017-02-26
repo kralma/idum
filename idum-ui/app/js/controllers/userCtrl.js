@@ -5,14 +5,15 @@
         });
 
         $scope.login = function () {
-            console.log($scope.user);
             UserService.login($scope.user).then(function (response) {
                 var data = response.data;
                 if (data) {
-                    DialogService.sendPositiveNotification("LOGIN_OK");
+                    DialogService.sendPositiveNotification("Přihlášení proběhlo v pořádku");
                     $rootScope.loggedUser = data;
-                } else
-                    DialogService.sendNegativeNotification("LOGIN_FAILED");
+                    $scope.detailsBoxShown = false;
+                } else {
+                    DialogService.sendNegativeNotification("Chybné přihlašovací údaje");
+                }
             });
         };
 
@@ -21,5 +22,13 @@
                 console.log(response.data);
             });
         };
+
+        $scope.logout = function () {
+            UserService.logout().then(function (response) {
+                $rootScope.loggedUser = response.data;
+                DialogService.sendPositiveNotification("Odhlášení proběhlo v pořádku");
+                $scope.detailsBoxShown = false;
+            });
+        }
     });
 })(angular);

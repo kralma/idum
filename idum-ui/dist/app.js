@@ -46,7 +46,18 @@
 (function (angular) {
     angular.module("app").controller("HeaderCtrl", ["$rootScope", "$scope", "$location", "$filter", function ($rootScope, $scope, $location, $filter) {
 
+        setContentMargin();
+        window.onresize = function () {
+            setContentMargin();
+        };
+
         $scope.$on('$routeChangeStart', function (scope, next, current) {});
+
+        function setContentMargin() {
+            var header = angular.element(document.getElementById("mainHeader"));
+            var headerHeight = header[0].clientHeight;
+            document.getElementById("mainContent").style.marginTop = headerHeight + "px";
+        }
     }]);
 })(angular);
 (function (angular) {
@@ -93,19 +104,29 @@
         });
 
         $scope.login = function () {
-            console.log($scope.user);
             UserService.login($scope.user).then(function (response) {
                 var data = response.data;
                 if (data) {
-                    DialogService.sendPositiveNotification("LOGIN_OK");
+                    DialogService.sendPositiveNotification("Přihlášení proběhlo v pořádku");
                     $rootScope.loggedUser = data;
-                } else DialogService.sendNegativeNotification("LOGIN_FAILED");
+                    $scope.detailsBoxShown = false;
+                } else {
+                    DialogService.sendNegativeNotification("Chybné přihlašovací údaje");
+                }
             });
         };
 
         $scope.register = function () {
             UserService.register($scope.user).then(function (response) {
                 console.log(response.data);
+            });
+        };
+
+        $scope.logout = function () {
+            UserService.logout().then(function (response) {
+                $rootScope.loggedUser = response.data;
+                DialogService.sendPositiveNotification("Odhlášení proběhlo v pořádku");
+                $scope.detailsBoxShown = false;
             });
         };
     }]);
@@ -282,6 +303,25 @@
                         return;
                     }
                     scope.shown = false;
+                };
+            }
+        };
+    });
+})(angular);
+(function (angular) {
+    angular.module('app').directive('sensorPreview', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: { sensor: '=' },
+            templateUrl: 'idum-ui/app/js/directives/templates/sensor-preview.tmpl.html',
+            link: function (scope, elem, attrs) {
+                scope.showMore = false;
+                scope.getExtendedData = function () {
+                    scope.showMore = true;
+                    SensorDataService.getSensorData(scope.sensor.sensorId).then(function (response) {
+                        scope.allValues = response.data;
+                    });
                 };
             }
         };
@@ -474,6 +514,12 @@
                 return $http({
                     method: 'GET',
                     url: restUrlPrefix + 'login.php'
+                });
+            },
+            logout: function () {
+                return $http({
+                    method: 'GET',
+                    url: restUrlPrefix + 'logout.php'
                 });
             }
         };

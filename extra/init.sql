@@ -16,8 +16,7 @@ CREATE TABLE sensor_value (
   sensor_value_id BIGINT PRIMARY KEY AUTO_INCREMENT,
   sensor_id       BIGINT,
   value           FLOAT(8,4) NOT NULL,
-  date_insert     TIMESTAMP          DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
+  date_insert     TIMESTAMP          DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE project (
@@ -32,18 +31,18 @@ CREATE TABLE client (
   project_id  BIGINT,
   client_key  VARCHAR(255),
   client_name TEXT        NOT NULL,
-  user_insert VARCHAR(20) NOT NULL,
-  FOREIGN KEY (project_id) REFERENCES project (project_id)
+  user_insert VARCHAR(20) NOT NULL
+  #   ,FOREIGN KEY (project_id) REFERENCES project (project_id)
 );
 
 CREATE TABLE project_user (
   project_user_id      BIGINT AUTO_INCREMENT PRIMARY KEY,
   project_id           BIGINT,
   username             VARCHAR(20),
-  project_user_role_id BIGINT,
-  FOREIGN KEY (project_id) REFERENCES project(project_id),
-  FOREIGN KEY (username) REFERENCES user (username),
-  FOREIGN KEY (project_user_role_id) REFERENCES project_user_role (project_user_role_id)
+  project_user_role_id BIGINT
+  #   FOREIGN KEY (project_id) REFERENCES project(project_id),
+  #   FOREIGN KEY (username) REFERENCES user (username),
+  #   FOREIGN KEY (project_user_role_id) REFERENCES project_user_role (project_user_role_id)
 );
 
 CREATE TABLE project_user_role (
@@ -58,10 +57,10 @@ CREATE TABLE sensor (
   client_id      BIGINT,
   can_read       TINYINT(1),
   can_write      TINYINT(1),
-  sensor_type_id BIGINT,
-  FOREIGN KEY (sensor_type_id) REFERENCES sensor_type (sensor_type_id),
-  FOREIGN KEY (client_id) REFERENCES client (client_id),
-  FOREIGN KEY (sensor_id) REFERENCES sensor (sensor_id)
+  sensor_type_id BIGINT
+  #   FOREIGN KEY (sensor_type_id) REFERENCES sensor_type (sensor_type_id),
+  #   FOREIGN KEY (client_id) REFERENCES client (client_id),
+  #   FOREIGN KEY (sensor_id) REFERENCES sensor (sensor_id)
 );
 
 CREATE TABLE admin (

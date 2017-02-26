@@ -13,31 +13,57 @@
 </head>
 
 <body ng-app="app">
-<div class="all" ng-controller="HeaderCtrl">
-    <header class="main">
+<div class="all">
+    <header class="main" ng-controller="HeaderCtrl" id="mainHeader">
+        <div class="logo">
+            <a ng-href="/">
+                iDům
+            </a>
+        </div>
         <nav>
-            <a ng-href="home">
-                Shrnutí
-            </a>
-            <a ng-href="projects">
-                Moje projekty
-            </a>
+            <ul>
+                <li>
+                    <a ng-href="home">
+                        Shrnutí
+                    </a>
+                </li>
+                <li>
+                    <a ng-href="projects">
+                        Moje projekty
+                    </a>
+                </li>
+            </ul>
         </nav>
         <div ng-controller="UserCtrl" class="user-box">
-            <div class="logged-user" ng-show="loggedUser">
+            <div class="logged-user" ng-show="loggedUser" ng-click="detailsBoxShown = true;">
                 {{loggedUser.name}}
             </div>
-            <form class="login-form" ng-hide="loggedUser" ng-submit="login()">
-                <input type="text" required ng-model="user.username"/>
-                <input type="password" required ng-model="user.password"/>
-                <button type="submit">
+            <ul class="user-info" ng-show="loggedUser && detailsBoxShown">
+                <li>
+                    {{loggedUser.username}}
+                </li>
+                <li>
+                    <a ng-click="logout()">
+                        Odhlásit
+                    </a>
+                </li>
+            </ul>
+            <div ng-hide="loggedUser">
+                <button class="btn primary" ng-click="detailsBoxShown = true;">Přihlásit se</button>
+            </div>
+            <form class="login-form form-group user-info" ng-show="!loggedUser && detailsBoxShown" ng-submit="login()">
+                <input type="text" required ng-model="user.username" placeholder="Uživatelské jméno"/>
+                <input type="password" required ng-model="user.password" placeholder="Heslo"/>
+                <button type="submit" class="btn primary">
                     Přihlásit
                 </button>
             </form>
+            <div class="overlay" ng-show="detailsBoxShown" ng-click="detailsBoxShown = false">
+            </div>
         </div>
     </header>
 
-    <section class="content wrapper">
+    <section class="content wrapper" id="mainContent">
         <div ng-view class="content">
         </div>
     </section>
